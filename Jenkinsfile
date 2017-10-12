@@ -25,18 +25,17 @@ pipeline {
     //             }
     //         }
     //     }
-     stage("Firmware upload to cloud"){
+     stage("Preparation"){
             steps {
                     script{
                         currentBuild.displayName = "#${env.BUILD_NUMBER} [${params.CODE_BRANCH}]"
-                        vars.readFromFile(this);
-                        vars['testBranch'] = params.TEST_BRANCH;
-                        def testCodeGit = new GitWrapper(this, "https://github.com/homersoft/FW-MESH-CI-tests", vars['testBranch'], "", false)
+                        def testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         try {
                             testCodeGit.getRemoteCommitSha();
                         } catch (error) {
                             vars['testBranch'] = "dev";
                         }
+                        testCodeGit.pull();
                     }
                 // emailext(to: "lukasz.job@silvair.com",
                 //         subject: "[Jenkins] ${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME} '${currentBuild.currentResult}'",

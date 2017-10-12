@@ -34,8 +34,8 @@ pipeline {
                             testCodeGit.getRemoteCommitSha();
                         } catch (error) {
                             vars['testBranch'] = "master";
+                            testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         }
-                        def testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         testCodeGit.pull();
                     }
                 // emailext(to: "lukasz.job@silvair.com",

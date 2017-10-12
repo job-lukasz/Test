@@ -32,15 +32,15 @@ parameters {
             steps {
                     script{
                         vars['testBranch'] = params.TEST_BRANCH
-                        currentBuild.displayName = "#${env.BUILD_NUMBER} [${params.TEST_BRANCH}]"
                         def testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         try {
-                            testCodeGit.getRemoteCommitSha();
+                            testCodeGit.pull();
                         } catch (error) {
                             vars['testBranch'] = "master";
                             testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
+                            testCodeGit.pull();
                         }
-                        testCodeGit.pull();
+                        currentBuild.displayName = "#${env.BUILD_NUMBER} [${params.TEST_BRANCH}]"
                     }
                 // emailext(to: "lukasz.job@silvair.com",
                 //         subject: "[Jenkins] ${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME} '${currentBuild.currentResult}'",

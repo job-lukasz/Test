@@ -29,13 +29,13 @@ pipeline {
             steps {
                     script{
                         currentBuild.displayName = "#${env.BUILD_NUMBER} [${params.CODE_BRANCH}]"
-                        def testCodeGit = new GitWrapper(this, "https://github.com/homersoft/FW-MESH-CI-tests", vars['testBranch'], "", false)
+                        def testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         try {
                             testCodeGit.getRemoteCommitSha();
                         } catch (error) {
-                            vars['testBranch'] = "dev";
+                            vars['testBranch'] = "master";
                         }
-                        def testCodeGit = new GitWrapper(this, "https://github.com/homersoft/FW-MESH-CI-tests", vars['testBranch'], "", false)
+                        def testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         testCodeGit.pull()
                     }
                 // emailext(to: "lukasz.job@silvair.com",

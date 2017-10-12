@@ -36,7 +36,7 @@ pipeline {
                         } catch (error) {
                             vars['testBranch'] = "master";
                         }
-                        def testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
+                        testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         testCodeGit.pull()
                     }
                 // emailext(to: "lukasz.job@silvair.com",

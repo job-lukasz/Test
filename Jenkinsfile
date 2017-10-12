@@ -31,6 +31,7 @@ pipeline {
      stage("Preparation"){
            steps {
                     script{
+                        deleteDir()
                         vars['testBranch'] = params.TEST_BRANCH
                         def testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         try {

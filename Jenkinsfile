@@ -16,6 +16,7 @@ pipeline {
     options {
         skipDefaultCheckout();
     }
+    
     stages {
     // lock(label: 'meshroomBuild'){
     //     stage("Preparations"){

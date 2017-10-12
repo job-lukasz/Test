@@ -33,8 +33,9 @@ pipeline {
                         try {
                             testCodeGit.getRemoteCommitSha();
                         } catch (error) {
-                            vars['testBranch'] = "dev";
+                            vars['testBranch'] = "master";
                         }
+                        def testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         testCodeGit.pull();
                     }
                 // emailext(to: "lukasz.job@silvair.com",
@@ -95,6 +96,7 @@ pipeline {
         stage("CheckSCMChanges"){
             steps {
                 script{
+                    echo "Jenkisfile from test brunch"
                     // def wrapper = new GitWrapper(this,"https://github.com/homersoft/FW-MESH-nRF5x-DimmingModule.git", "dev")
                     // def sha = wrapper.getRemoteCommitSha();
                     // echo sha

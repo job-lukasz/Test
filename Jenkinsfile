@@ -16,6 +16,9 @@ pipeline {
     options {
         skipDefaultCheckout();
     }
+parameters {
+        string(name: 'TEST_BRANCH', defaultValue: 'dev', description: 'Branch to execute pipeline')
+    }
     stages {
     // lock(label: 'meshroomBuild'){
     //     stage("Preparations"){
@@ -28,7 +31,8 @@ pipeline {
      stage("Preparation"){
             steps {
                     script{
-                        currentBuild.displayName = "#${env.BUILD_NUMBER} [${params.CODE_BRANCH}]"
+                        vars['testBranch'] = params.TEST_BRANCH
+                        currentBuild.displayName = "#${env.BUILD_NUMBER} [${params.TEST_BRANCH}]"
                         def testCodeGit = new GitWrapper(this, "https://github.com/job-lukasz/test.git", vars['testBranch'], "", false)
                         try {
                             testCodeGit.getRemoteCommitSha();
